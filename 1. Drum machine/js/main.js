@@ -33,7 +33,7 @@ const playKeys = {
     this.playAudio(event);
   },
 
-  eventHandler: function (event) { 
+  eventHandler: function (event) {
     this.config.$window.addEventListener('keydown', this.audioAndAnimation.bind(this));
   },
 
