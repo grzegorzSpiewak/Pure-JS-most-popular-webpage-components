@@ -13,7 +13,7 @@ const control = {
     const events = 'change mousemove'.split(' ');
     const inputs = this.config.$inputs;
     /*===== Loop to add handler to diffrent events =====*/
-    for (var i = 0, len = events.length; i < len; i++) {
+    for (var i = 0; i < events.length; i++) {
       inputs.forEach(input => input.addEventListener(events[i], this.handleUpdate));
     }
   },
