@@ -1,4 +1,4 @@
-/* ===== Select many checkbox ===== */
+/* ===== Select many checkbox with shift===== */
 const selectCheckbox = {
   config: {
     $checkboxes: document.querySelectorAll('.inbox input[type="checkbox"]'),
