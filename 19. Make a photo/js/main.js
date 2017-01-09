@@ -5,6 +5,7 @@ const photobooth = {
     $canvas: document.querySelector('.photo'),
     $strip: document.querySelector('.strip'),
     $snap: document.querySelector('.snap'),
+    $photoBtn: document.querySelector('.btn'),
     $window: window
   },
 
@@ -22,7 +23,7 @@ const photobooth = {
         console.error(`OH NO!!!`, err);
       });
   },
-
+  /* set video to canvas */
   paintToCanvas: function(source) {
     const canvas = this.config.$canvas;
     const video = this.config.$video;
@@ -40,16 +41,37 @@ const photobooth = {
     });
   },
 
+  takePhoto: function() {
+    const snap = this.config.$snap;
+    const canvas = this.config.$canvas;
+    const strip = this.config.$strip;
+    /* play sound */
+    snap.currentTime = 0;
+    snap.play();
+    /* Make a photo */
+    const data = canvas.toDataURL('image/jpeg');
+    const link = document.createElement('a');
+    link.href = data;
+    link.setAttribute('download', 'handsome');
+    link.innerHTML = `<img src="${data}" alt="Handsome Man" />`;
+    strip.insertBefore(link, strip.firsChild);
+  },
   /* ==================== Handlers  ==================== */
   playVideo: function() {
     const video = this.config.$video;
-    video.addEventListener('canplay', this.paintToCanvas.bind(this))
+    video.addEventListener('canplay', this.paintToCanvas.bind(this));
+  },
+
+  takePhotoHandler: function() {
+    const btn = this.config.$photoBtn;
+    btn.addEventListener('click', this.takePhoto.bind(this));
   },
 
   /* ==================== Initialize  ==================== */
   initialize: function() {
     this.getVideo();
     this.playVideo();
+    this.takePhotoHandler();
   },
 }
 photobooth.initialize();
