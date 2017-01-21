@@ -1,17 +1,12 @@
-/* ==================== Make a photo  ==================== */
-const photobooth = {
-  config: {
-    $video: document.querySelector('.player'),
-    $canvas: document.querySelector('.photo'),
-    $strip: document.querySelector('.strip'),
-    $snap: document.querySelector('.snap'),
-    $photoBtn: document.querySelector('.btn'),
-    $window: window
-  },
+/* ==================== Make a photo Class  ==================== */
+class photobooth {
+  constructor(config) {
+    this.config = config;
+  }
 
   /* ==================== Functionality  ==================== */
 
-  getVideo: function() {
+  getVideo() {
     const video = this.config.$video;
     const window = this.config.$window;
     navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -22,9 +17,9 @@ const photobooth = {
       .catch(err => {      // when user didng give acces to camera
         console.error(`OH NO!!!`, err);
       });
-  },
-  /* set video to canvas */
-  paintToCanvas: function(source) {
+  }
+
+  paintToCanvas(source) {
     const canvas = this.config.$canvas;
     const video = this.config.$video;
     const ctx = canvas.getContext('2d');
@@ -39,9 +34,9 @@ const photobooth = {
     window.requestAnimationFrame(() => {
       this.paintToCanvas();
     });
-  },
+  }
 
-  takePhoto: function() {
+  takePhoto() {
     const snap = this.config.$snap;
     const canvas = this.config.$canvas;
     const strip = this.config.$strip;
@@ -55,23 +50,37 @@ const photobooth = {
     link.setAttribute('download', 'handsome');
     link.innerHTML = `<img src="${data}" alt="Handsome Man" />`;
     strip.insertBefore(link, strip.firsChild);
-  },
+  }
+
   /* ==================== Handlers  ==================== */
-  playVideo: function() {
+
+  playVideo() {
     const video = this.config.$video;
     video.addEventListener('canplay', this.paintToCanvas.bind(this));
-  },
+  }
 
-  takePhotoHandler: function() {
+  takePhotoHandler() {
     const btn = this.config.$photoBtn;
     btn.addEventListener('click', this.takePhoto.bind(this));
-  },
+  }
 
   /* ==================== Initialize  ==================== */
-  initialize: function() {
+  initialize() {
     this.getVideo();
     this.playVideo();
     this.takePhotoHandler();
-  },
+  }
 }
-photobooth.initialize();
+
+const picture = document.querySelectorAll('.photobooth');
+picture.forEach(elem => {
+  const makePicture = new photobooth ({
+    $video: document.querySelector('.player'),
+    $canvas: document.querySelector('.photo'),
+    $strip: document.querySelector('.strip'),
+    $snap: document.querySelector('.snap'),
+    $photoBtn: document.querySelector('.btn'),
+    $window: window
+  })
+  makePicture.initialize()
+})

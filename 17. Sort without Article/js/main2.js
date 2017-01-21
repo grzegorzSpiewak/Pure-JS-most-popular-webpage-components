@@ -1,6 +1,6 @@
 /* ===== Type ahead with jason Data ===== */
 
-class displayHint_ {
+class displayHint {
   constructor(config) {
     this.config = config;
   }
@@ -60,7 +60,7 @@ class displayHint_ {
 const forms = document.querySelectorAll('form');
 
 forms.forEach(form => {
-  const v1 = new displayHint_({
+  const v1 = new displayHint({
       $searchInput: form.querySelector('.search'),
       $suggestions: form.querySelector('.suggestions'),
       ready: false,
